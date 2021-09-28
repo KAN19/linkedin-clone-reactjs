@@ -14,9 +14,18 @@
   margin-left: 10px;
 }
 
+.post__infor > h2 {
+  font-size: 15px;
+}
+
 .post__infor > p {
   font-size: 12px;
   color: gray;
+}
+
+.post__buttons {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .post__body {

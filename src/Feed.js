@@ -12,21 +12,24 @@ import {
   query,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import "./Feed.css";
 import { db } from "./firebase";
 import InputOption from "./InputOption";
 import Post from "./Post";
+import { selectUser } from "./features/userSlice";
 
 function Feed() {
+  const user = useSelector(selectUser);
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
 
   async function addPost() {
     const data = {
-      name: "Nguyen Kiet",
-      description: "testing",
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: "",
+      photoUrl: user.photoUrl || "",
       timestamp: Timestamp.now(),
     };
     try {
@@ -92,12 +95,13 @@ function Feed() {
         </div>
       </div>
       {/* Post */}
-      {posts.map(({ id, data: { name, description, message } }) => (
+      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
         <Post
           key={id}
           name={name}
           description={description}
           message={message}
+          photoUrl={photoUrl}
         />
       ))}
     </div>

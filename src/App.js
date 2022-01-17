@@ -16,11 +16,12 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("user login", user);
         dispatch(
           login({
             email: user.email,
             uid: user.uid,
-            displayName: user.name,
+            displayName: user.displayName,
             photoUrl: user.photoUrl,
           })
         );

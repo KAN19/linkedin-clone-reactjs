@@ -7,14 +7,14 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import WorkIcon from "@material-ui/icons/Work";
 import MessageIcon from "@material-ui/icons/Message";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
-import { logout } from "./features/userSlice";
+import { logout, selectUser } from "./features/userSlice";
 
 function Header() {
   const dispatch = useDispatch();
-
+  const user = useSelector(selectUser);
   const logoutOfApp = () => {
     dispatch(logout());
     signOut(auth);
@@ -40,11 +40,9 @@ function Header() {
         <HeaderOptions Icon={WorkIcon} title="Jobs" />
         <HeaderOptions Icon={MessageIcon} title="Messaging" />
         <HeaderOptions Icon={NotificationsIcon} title="Notifications" />
-        <HeaderOptions
-          onClick={logoutOfApp}
-          avatar="https://image.flaticon.com/icons/png/512/4359/4359908.png"
-          title="me"
-        />
+        {user && (
+          <HeaderOptions avatar={true} onClick={logoutOfApp} title="me" />
+        )}
       </div>
     </div>
   );
